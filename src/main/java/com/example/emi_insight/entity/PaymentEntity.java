@@ -12,28 +12,26 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "loans")
+@Table(name = "Payment_tbl")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoanEntity {
+public class PaymentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
-    private String loanId;
-    private String name;
-    private Double principal;
-    private Double interest_rate;
-    private Integer tenure_months;
-    private Double emi;
-    private LocalDate startDate;
+    private String paymentId;
+
+    private Double amount;
+    private LocalDate payment_date;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "loan_id")
+    private LoanEntity loan;
 
     @Column(updatable = false)
     @CreationTimestamp

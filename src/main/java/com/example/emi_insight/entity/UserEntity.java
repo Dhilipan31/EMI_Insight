@@ -18,14 +18,14 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(unique = true)
-    public String userId;
-    public String username;
+    private String userId;
+    private String username;
     @Column(unique = true)
-    public String email;
-    public String password;
+    private String email;
+    private String password;
 
     @Column(updatable = false)
     @CreationTimestamp
