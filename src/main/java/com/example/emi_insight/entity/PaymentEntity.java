@@ -33,6 +33,8 @@ public class PaymentEntity {
     @JoinColumn(name = "loan_id")
     private LoanEntity loan;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentType type;
     @Column(updatable = false)
     @CreationTimestamp
     private Timestamp created_at;

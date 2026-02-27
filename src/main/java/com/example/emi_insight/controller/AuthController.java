@@ -4,6 +4,7 @@ import com.example.emi_insight.dto.AuthResponse;
 import com.example.emi_insight.dto.LoginRequest;
 import com.example.emi_insight.dto.RegisterRequest;
 import com.example.emi_insight.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,13 +16,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
