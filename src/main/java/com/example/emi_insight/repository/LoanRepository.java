@@ -5,12 +5,15 @@ import com.example.emi_insight.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface LoanRepository extends JpaRepository<LoanEntity, Long> {
 
     Optional<LoanEntity> findByUser(UserEntity user);
+
+    List<LoanEntity> findAllByUser(UserEntity user);
 
     Optional<LoanEntity> findByLoanIdAndUser(String loanId, UserEntity user);
 }

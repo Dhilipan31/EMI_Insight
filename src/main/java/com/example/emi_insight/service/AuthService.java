@@ -6,6 +6,7 @@ import com.example.emi_insight.dto.RegisterRequest;
 import com.example.emi_insight.entity.UserEntity;
 import com.example.emi_insight.repository.UserRepository;
 import com.example.emi_insight.util.JwtUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -23,19 +25,6 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
-
-    public AuthService(
-        UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        AuthenticationManager authenticationManager,
-        JwtUtil jwtUtil,
-        CustomUserDetailsService customUserDetailsService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.customUserDetailsService = customUserDetailsService;
-    }
 
     public AuthResponse register(RegisterRequest request) {
         validateRegisterRequest(request);

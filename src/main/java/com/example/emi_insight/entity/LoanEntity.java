@@ -29,6 +29,15 @@ public class LoanEntity {
     private Double interest_rate;
     private Integer tenure_months;
     private Double emi;
+
+    private Double remaining_principal;
+    private Double interest_paid;
+    private Integer emi_paid_count;
+    private Integer remaining_emi_month;
+
+    @Enumerated(EnumType.STRING)
+    private LoanStatus loan_status;
+
     private LocalDate startDate;
 
     @ManyToOne

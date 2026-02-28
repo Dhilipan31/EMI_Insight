@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class PaymentRequestDTO {
     private Double amount;
     private String type;
+    private LocalDate paymentDate;
 }

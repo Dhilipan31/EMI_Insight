@@ -27,7 +27,10 @@ public class PaymentEntity {
     private String paymentId;
 
     private Double amount;
+    private Double principal_paid;
+    private Double interest_paid;
     private LocalDate payment_date;
+
 
     @ManyToOne
     @JoinColumn(name = "loan_id")

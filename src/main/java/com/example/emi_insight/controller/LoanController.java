@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping({"/loan", "/api/v1/loans"})
+@RequestMapping({"/loans"})
 @RequiredArgsConstructor
 public class LoanController {
 
@@ -35,11 +35,10 @@ public class LoanController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> getLoan(){
-        try{
-            LoanResponseDTO response = loanService.getLoan();
-            return ResponseEntity.ok(response);
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllLoans() {
+        try {
+            return ResponseEntity.ok(loanService.getAllLoans());
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
