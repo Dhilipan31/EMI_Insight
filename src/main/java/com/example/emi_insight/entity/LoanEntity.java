@@ -40,6 +40,10 @@ public class LoanEntity {
 
     private LocalDate startDate;
 
+    private Integer emiPayDay;
+    private LocalDate lastPaymentDate;
+    private LocalDate nextPaymentDate;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;

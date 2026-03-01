@@ -27,6 +27,9 @@ public class UserEntity {
     private String email;
     private String password;
 
+    private Double salary;
+    private Double monthlyExpense;
+
     @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;

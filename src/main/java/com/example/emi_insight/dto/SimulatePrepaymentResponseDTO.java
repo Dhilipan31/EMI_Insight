@@ -15,4 +15,6 @@ public class SimulatePrepaymentResponseDTO {
     private Double interestSaved;
     private Integer monthsReduced;
     private LocalDate newClosingDate;
+    private String recommendation;
+    private String reason;
 }

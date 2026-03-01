@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -42,6 +43,10 @@ public class PaymentService {
         }
 
         LoanEntity loan = getOwnedLoan(loanId);
+
+        // Validate that payment date matches nextPaymentDate
+        validatePaymentDate(request.getPaymentDate(), loan.getNextPaymentDate());
+
         validateEmiAmount(request.getAmount(), loan.getEmi());
         PaymentBreakup breakup = applyEmiOnLoan(loan, request.getAmount());
 
@@ -108,21 +113,26 @@ public class PaymentService {
     }
 
     private PaymentBreakup applyEmiOnLoan(LoanEntity loan, Double paymentAmount) {
-        Double outstanding = cs.safe(loan.getRemaining_principal());
+        double outstanding = cs.safe(loan.getRemaining_principal());
         if (outstanding <= 0) {
             throw new RuntimeException("Loan already closed");
         }
 
-        Double monthlyRate = cs.safe(loan.getInterest_rate()) / (12 * 100);
-        Double interestDue = outstanding * monthlyRate;
+        double monthlyRate = cs.safe(loan.getInterest_rate()) / (12 * 100);
+        double interestDue = outstanding * monthlyRate;
         Double interestComponent = Math.min(paymentAmount, interestDue);
-        Double principalComponent = paymentAmount - interestComponent;
+        double principalComponent = paymentAmount - interestComponent;
         principalComponent = Math.min(principalComponent, outstanding);
 
         loan.setInterest_paid(cs.safe(loan.getInterest_paid()) + interestComponent);
         Double newOutstanding = Math.max(outstanding - principalComponent, 0.0);
         loan.setRemaining_principal(newOutstanding);
         loan.setEmi_paid_count((loan.getEmi_paid_count() == null ? 0 : loan.getEmi_paid_count()) + 1);
+
+        // Update payment tracking dates
+        loan.setLastPaymentDate(LocalDate.now());
+        loan.setNextPaymentDate(calculateNextPaymentDate(loan.getNextPaymentDate(), loan.getEmiPayDay()));
+
         int remainingMonths = loan.getRemaining_emi_month() == null ? 0 : loan.getRemaining_emi_month();
         loan.setRemaining_emi_month(Math.max(remainingMonths - 1, 0));
         updateLoanStatus(loan);
@@ -185,6 +195,29 @@ public class PaymentService {
         String email = authentication.getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found for email: " + email));
+    }
+
+    private void validatePaymentDate(LocalDate paymentDate, LocalDate nextPaymentDate) {
+        if (nextPaymentDate == null) {
+            throw new RuntimeException("Loan does not have a valid payment schedule");
+        }
+
+        LocalDate today = LocalDate.now();
+        if (!today.equals(paymentDate)) {
+            throw new RuntimeException("Payment date must be today. Expected: " + today + ", but provided: " + paymentDate);
+        }
+
+        if (!paymentDate.equals(nextPaymentDate)) {
+            throw new RuntimeException("Payment can only be made on the scheduled date: " + nextPaymentDate);
+        }
+    }
+
+    private LocalDate calculateNextPaymentDate(LocalDate currentPaymentDate, Integer emiPayDay) {
+        if (emiPayDay == null) {
+            throw new RuntimeException("emiPayDay is not set for this loan");
+        }
+        // Add one month to the current next payment date
+        return currentPaymentDate.plusMonths(1);
     }
 
     private record PaymentBreakup(Double principalPaid, Double interestPaid) {

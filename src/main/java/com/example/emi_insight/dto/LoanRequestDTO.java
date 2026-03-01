@@ -16,4 +16,5 @@ public class LoanRequestDTO {
     private Double interestRate;
     private Integer tenureMonths;
     private LocalDate startDate;
+    private Integer emiPayDay;
 }

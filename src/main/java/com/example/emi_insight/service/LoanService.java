@@ -29,6 +29,7 @@ public class LoanService {
 
     public LoanResponseDTO createLoan(LoanRequestDTO request) {
 
+        validateLoanRequest(request);
         Double emi = cs.calculateEmi(request.getPrincipal(), request.getInterestRate(), request.getTenureMonths());
         UserEntity currentUser = getCurrentLoggedInUser();
 
@@ -42,6 +43,9 @@ public class LoanService {
         loanEntity.setLoan_status(LoanStatus.ACTIVE);
         loanEntity.setUser(currentUser);
 
+        // Initialize payment date fields
+        loanEntity.setNextPaymentDate(calculateNextPaymentDate(request.getStartDate(), request.getEmiPayDay()));
+
         LoanEntity savedLoan;
         try {
             savedLoan = loanRepository.save(loanEntity);
@@ -50,15 +54,6 @@ public class LoanService {
         }
 
         return convertDTO(savedLoan);
-    }
-
-    public LoanResponseDTO getLoan(){
-        UserEntity currentUser = getCurrentLoggedInUser();
-
-        LoanEntity existLoan = loanRepository.findByUser(currentUser)
-                .orElseThrow(() -> new RuntimeException("No loan record found for this user"));
-
-        return convertDTO(existLoan);
     }
 
     public List<LoanResponseDTO> getAllLoans() {
@@ -106,12 +101,15 @@ public class LoanService {
         UserEntity currentUser = getCurrentLoggedInUser();
         LoanEntity loan = loanRepository.findByLoanIdAndUser(loanId, currentUser)
                 .orElseThrow(() -> new RuntimeException("Loan not found for this user"));
+
         double currentOutstanding = cs.safe(loan.getRemaining_principal());
         if (currentOutstanding <= 0) {
             return SimulatePrepaymentResponseDTO.builder()
                     .interestSaved(0.0)
                     .monthsReduced(0)
                     .newClosingDate(LocalDate.now())
+                    .recommendation("N/A")
+                    .reason("Loan is already closed")
                     .build();
         }
 
@@ -129,10 +127,41 @@ public class LoanService {
         LocalDate baseDate = LocalDate.now();
         LocalDate newClosingDate = baseDate.plusMonths(newRemainingMonths);
 
+        // Fetch user salary and calculate disposable income
+        Double salary = currentUser.getSalary();
+        Double monthlyExpense = currentUser.getMonthlyExpense();
+
+        String recommendation = "N/A";
+        String reason = "User has not set salary or monthly expense";
+
+        if (salary != null && salary > 0 && monthlyExpense != null) {
+            // Calculate total monthly EMI across all loans
+            List<LoanEntity> allLoans = loanRepository.findAllByUser(currentUser);
+            double totalMonthlyEmi = 0.0;
+            for (LoanEntity userLoan : allLoans) {
+                if (userLoan.getLoan_status() == LoanStatus.ACTIVE) {
+                    totalMonthlyEmi += cs.safe(userLoan.getEmi());
+                }
+            }
+
+            double disposableIncome = salary - monthlyExpense - totalMonthlyEmi;
+            double disposableIncomePercentage = (disposableIncome / salary) * 100;
+
+            if (disposableIncomePercentage > 30) {
+                recommendation = "TENURE_REDUCTION";
+                reason = String.format("Disposable income (%.2f%%) is greater than 30%% of salary. Recommended to use prepayment to reduce tenure and save on interest.", disposableIncomePercentage);
+            } else {
+                recommendation = "EMI_REDUCTION";
+                reason = String.format("Disposable income (%.2f%%) is less than or equal to 30%% of salary. Recommended to use prepayment to reduce EMI for cash flow flexibility.", disposableIncomePercentage);
+            }
+        }
+
         return SimulatePrepaymentResponseDTO.builder()
                 .interestSaved(interestSaved)
                 .monthsReduced(monthsReduced)
                 .newClosingDate(newClosingDate)
+                .recommendation(recommendation)
+                .reason(reason)
                 .build();
     }
 
@@ -169,6 +198,21 @@ public class LoanService {
         String email = authentication.getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found for email: " + email));
+    }
+
+    private void validateLoanRequest(LoanRequestDTO request) {
+        if (request.getEmiPayDay() == null || request.getEmiPayDay() < 1 || request.getEmiPayDay() > 28) {
+            throw new RuntimeException("emiPayDay must be between 1 and 28");
+        }
+    }
+
+    private LocalDate calculateNextPaymentDate(LocalDate startDate, Integer emiPayDay) {
+        // If startDate day is already past emiPayDay, schedule for next month
+        if (startDate.getDayOfMonth() >= emiPayDay) {
+            return startDate.plusMonths(1).withDayOfMonth(emiPayDay);
+        } else {
+            return startDate.withDayOfMonth(emiPayDay);
+        }
     }
 
 }
