@@ -35,13 +35,14 @@ public class LoanService {
 
         LoanEntity loanEntity = convertEntity(request);
 
-        loanEntity.setEmi(cs.round2(emi));
+        loanEntity.setEmi(Math.ceil(emi));
         loanEntity.setRemaining_principal(request.getPrincipal());
         loanEntity.setInterest_paid(0.0);
         loanEntity.setEmi_paid_count(0);
         loanEntity.setRemaining_emi_month(request.getTenureMonths());
         loanEntity.setLoan_status(LoanStatus.ACTIVE);
         loanEntity.setUser(currentUser);
+        loanEntity.setEmiPayDay(request.getEmiPayDay());
 
         // Initialize payment date fields
         loanEntity.setNextPaymentDate(calculateNextPaymentDate(request.getStartDate(), request.getEmiPayDay()));
@@ -167,6 +168,8 @@ public class LoanService {
                 .interestSaved(interestSaved)
                 .monthsReduced(monthsReduced)
                 .newClosingDate(newClosingDate)
+                .newRemainingMonths(newRemainingMonths)
+                .newOutstanding(newOutstanding)
                 .recommendation(recommendation)
                 .reason(reason)
                 .build();

@@ -14,6 +14,8 @@ import java.time.LocalDate;
 public class SimulatePrepaymentResponseDTO {
     private Double interestSaved;
     private Integer monthsReduced;
+    private Double newOutstanding;
+    private Integer newRemainingMonths;
     private LocalDate newClosingDate;
     private String recommendation;
     private String reason;

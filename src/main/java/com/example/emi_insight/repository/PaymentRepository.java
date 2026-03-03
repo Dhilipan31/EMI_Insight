@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
 
-    @Query("select p from PaymentEntity p where p.loan = :loan order by p.payment_date asc")
+    @Query("select p from PaymentEntity p where p.loan = :loan order by p.payment_date desc")
     List<PaymentEntity> findPaymentsByLoanOrdered(LoanEntity loan);
 }
