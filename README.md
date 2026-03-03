@@ -261,10 +261,3 @@ It focuses on automation, scalability, and maintainable architecture.
 Dhilipan  
 Full Stack Developer  
 React | Spring Boot | System Design Enthusiast
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License – see the LICENSE file for details.
-You are free to use, modify, and distribute this software for personal and commercial purposes.
