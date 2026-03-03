@@ -87,8 +87,15 @@ public class LoanService {
 
         return LoanDetailsResponseDTO.builder()
                 .loanId(loan.getLoanId())
+                .principal(loan.getPrincipal())
                 .outstandingBalance(outstandingBalance)
                 .interestPaid(interestPaid)
+                .loan_status(loan.getLoan_status())
+                .emi_paid_count(loan.getEmi_paid_count())
+                .tenure_months(loan.getTenure_months())
+                .lastPaymentDate(loan.getLastPaymentDate())
+                .nextPaymentDate(loan.getNextPaymentDate())
+                .emiPayDay(loan.getEmiPayDay())
                 .amortizationSummary(summary)
                 .build();
     }
@@ -174,6 +181,11 @@ public class LoanService {
                 .tenureMonths(savedLoan.getTenure_months())
                 .emi(cs.round2(savedLoan.getEmi()))
                 .startDate(savedLoan.getStartDate())
+                .remaining_principal(savedLoan.getRemaining_principal())
+                .loan_status(savedLoan.getLoan_status())
+                .emi_paid_count(savedLoan.getEmi_paid_count())
+                .remaining_emi_month(savedLoan.getRemaining_emi_month())
+                .interest_paid(savedLoan.getInterest_paid())
                 .build();
     }
 
