@@ -34,8 +34,9 @@ build/
 .env
 
 
-/client
-
+/client/node_modules
+/client/tmpclaude-1246-cwd
+/client/tmpclaude-5627-cwd
 /tmpclaude-1a28-cwd
 /tmpclaude-1d06-cwd
 /tmpclaude-1ef4-cwd
