@@ -1,12 +1,6 @@
 package com.example.emi_insight.controller;
 
-import com.example.emi_insight.dto.LoanDetailsResponseDTO;
-import com.example.emi_insight.dto.LoanRequestDTO;
-import com.example.emi_insight.dto.LoanResponseDTO;
-import com.example.emi_insight.dto.PaymentRequestDTO;
-import com.example.emi_insight.dto.PrePaymentDTO;
-import com.example.emi_insight.dto.SimulatePrepaymentRequestDTO;
-import com.example.emi_insight.dto.SimulatePrepaymentResponseDTO;
+import com.example.emi_insight.dto.*;
 import com.example.emi_insight.entity.PaymentEntity;
 import com.example.emi_insight.service.LoanService;
 import com.example.emi_insight.service.PaymentService;
@@ -92,6 +86,15 @@ public class LoanController {
             SimulatePrepaymentResponseDTO response = loanService.simulatePrepayment(loanId, request.getExtraAmount());
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{loadId}/paymenthistory")
+    public ResponseEntity<?> getPaymentHistory(@PathVariable String loadId){
+        try {
+            return ResponseEntity.ok(paymentService.getHistory(loadId));
+        }catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }

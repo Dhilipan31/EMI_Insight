@@ -1,5 +1,6 @@
 package com.example.emi_insight.service;
 
+import com.example.emi_insight.dto.PaymentHistoryDTO;
 import com.example.emi_insight.dto.PaymentRequestDTO;
 import com.example.emi_insight.dto.PrepaymentMode;
 import com.example.emi_insight.dto.PrePaymentDTO;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -92,6 +94,28 @@ public class PaymentService {
 
         loanRepository.save(loan);
         return paymentRepository.save(payment);
+    }
+
+    public List<PaymentHistoryDTO> getHistory(String loadId) {
+
+        LoanEntity loan = getOwnedLoan(loadId);
+
+        List<PaymentEntity> paymentHistory = paymentRepository.findPaymentsByLoanOrdered(loan);
+
+        return paymentHistory.stream()
+                .map(this::convertDTO)
+                .toList();
+    }
+
+    private PaymentHistoryDTO convertDTO(PaymentEntity payment){
+        return PaymentHistoryDTO.builder()
+                .paymentId(payment.getPaymentId())
+                .amount(payment.getAmount())
+                .principal_paid(payment.getPrincipal_paid())
+                .interest_paid(payment.getInterest_paid())
+                .payment_date(payment.getPayment_date())
+                .type(payment.getType())
+                .build();
     }
 
     private LoanEntity getOwnedLoan(String loanId) {
@@ -200,11 +224,6 @@ public class PaymentService {
     private void validatePaymentDate(LocalDate paymentDate, LocalDate nextPaymentDate) {
         if (nextPaymentDate == null) {
             throw new RuntimeException("Loan does not have a valid payment schedule");
-        }
-
-        LocalDate today = LocalDate.now();
-        if (!today.equals(paymentDate)) {
-            throw new RuntimeException("Payment date must be today. Expected: " + today + ", but provided: " + paymentDate);
         }
 
         if (!paymentDate.equals(nextPaymentDate)) {
