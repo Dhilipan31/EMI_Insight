@@ -118,12 +118,19 @@ function GetStarted() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Decorative Background Elements */}
+      {/* Enhanced Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient orbs for visual interest */}
-        <div className="absolute top-10 left-10 w-72 h-72 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-72 h-72 bg-secondary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-pulse" />
-        <div className="absolute top-1/2 left-1/3 w-96 h-96 bg-primary-600 rounded-full mix-blend-multiply filter blur-3xl opacity-5" />
+        {/* Large gradient orbs with improved visibility */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-secondary-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '2s'}} />
+        <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-primary-600 rounded-full mix-blend-overlay filter blur-3xl opacity-15" />
+
+        {/* Additional subtle grid pattern for depth */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `linear-gradient(0deg, transparent 24%, rgba(58, 130, 246, 0.1) 25%, rgba(58, 130, 246, 0.1) 26%, transparent 27%, transparent 74%, rgba(58, 130, 246, 0.1) 75%, rgba(58, 130, 246, 0.1) 76%, transparent 77%, transparent),
+          linear-gradient(90deg, transparent 24%, rgba(58, 130, 246, 0.1) 25%, rgba(58, 130, 246, 0.1) 26%, transparent 27%, transparent 74%, rgba(58, 130, 246, 0.1) 75%, rgba(58, 130, 246, 0.1) 76%, transparent 77%, transparent)`,
+          backgroundSize: '50px 50px'
+        }} />
       </div>
 
       <div className="w-full max-w-2xl relative z-10">
