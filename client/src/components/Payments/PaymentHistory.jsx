@@ -35,7 +35,7 @@ export const PaymentHistory = ({ loan }) => {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-red-400">
             {error}
           </div>
         )}
@@ -45,36 +45,36 @@ export const PaymentHistory = ({ loan }) => {
           <>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-gray-50 border-b border-gray-200">
+                <thead className="bg-dark-800 border-b border-dark-700">
                   <tr>
-                    <th className="text-left px-4 py-3 font-semibold text-gray-900">Date</th>
-                    <th className="text-left px-4 py-3 font-semibold text-gray-900">Amount</th>
-                    <th className="text-left px-4 py-3 font-semibold text-gray-900">Principal</th>
-                    <th className="text-left px-4 py-3 font-semibold text-gray-900">Interest</th>
-                    <th className="text-left px-4 py-3 font-semibold text-gray-900">Type</th>
+                    <th className="text-left px-4 py-3 font-semibold text-dark-text">Date</th>
+                    <th className="text-left px-4 py-3 font-semibold text-dark-text">Amount</th>
+                    <th className="text-left px-4 py-3 font-semibold text-dark-text">Principal</th>
+                    <th className="text-left px-4 py-3 font-semibold text-dark-text">Interest</th>
+                    <th className="text-left px-4 py-3 font-semibold text-dark-text">Type</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-dark-700">
                   {visiblePayments.map((payment) => (
-                    <tr key={payment.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3 text-gray-900">
+                    <tr key={payment.id} className="hover:bg-dark-800/50 transition">
+                      <td className="px-4 py-3 text-dark-text">
                         {formatDate(payment.paymentDate)}
                       </td>
-                      <td className="px-4 py-3 font-semibold text-gray-900">
+                      <td className="px-4 py-3 font-semibold text-dark-text">
                         {formatCurrency(payment.amount)}
                       </td>
-                      <td className="px-4 py-3 text-gray-700">
+                      <td className="px-4 py-3 text-dark-text-secondary">
                         {formatCurrency(payment.principalPaid)}
                       </td>
-                      <td className="px-4 py-3 text-gray-700">
+                      <td className="px-4 py-3 text-dark-text-secondary">
                         {formatCurrency(payment.interestPaid)}
                       </td>
                       <td className="px-4 py-3">
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${
                             payment.type === 'EMI'
-                              ? 'bg-blue-100 text-blue-800'
-                              : 'bg-green-100 text-green-800'
+                              ? 'badge-info'
+                              : 'badge-active'
                           }`}
                         >
                           {payment.type}
@@ -91,7 +91,7 @@ export const PaymentHistory = ({ loan }) => {
               <div className="flex justify-center pt-4">
                 <button
                   onClick={() => setShowAll(!showAll)}
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  className="text-primary-500 hover:text-primary-400 text-sm font-medium transition"
                 >
                   {showAll
                     ? 'Show Less'
@@ -101,26 +101,26 @@ export const PaymentHistory = ({ loan }) => {
             )}
 
             {/* Summary */}
-            <div className="border-t border-gray-200 pt-4 grid grid-cols-3 gap-4">
+            <div className="border-t border-dark-700 pt-4 grid grid-cols-3 gap-4">
               <div className="text-center">
-                <p className="text-xs text-gray-600">Total Paid</p>
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-xs text-dark-text-secondary">Total Paid</p>
+                <p className="text-lg font-bold text-dark-text">
                   {formatCurrency(
                     paymentHistory.reduce((sum, p) => sum + (p.amount || 0), 0)
                   )}
                 </p>
               </div>
               <div className="text-center">
-                <p className="text-xs text-gray-600">Principal Paid</p>
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-xs text-dark-text-secondary">Principal Paid</p>
+                <p className="text-lg font-bold text-dark-text">
                   {formatCurrency(
                     paymentHistory.reduce((sum, p) => sum + (p.principalPaid || 0), 0)
                   )}
                 </p>
               </div>
               <div className="text-center">
-                <p className="text-xs text-gray-600">Interest Paid</p>
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-xs text-dark-text-secondary">Interest Paid</p>
+                <p className="text-lg font-bold text-dark-text">
                   {formatCurrency(
                     paymentHistory.reduce((sum, p) => sum + (p.interestPaid || 0), 0)
                   )}
@@ -133,8 +133,8 @@ export const PaymentHistory = ({ loan }) => {
         {/* Empty State */}
         {!isLoading && !error && !hasPayments && (
           <div className="text-center py-8">
-            <p className="text-gray-600 mb-4">No payment history yet</p>
-            <p className="text-sm text-gray-500">
+            <p className="text-dark-text-secondary mb-4">No payment history yet</p>
+            <p className="text-sm text-dark-text-secondary">
               Payments will appear here once you make the first EMI payment on{' '}
               {formatDate(loan?.nextPaymentDate)}
             </p>

@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { Button, Input, Alert } from '../components/Common'
+import { Button, Input, Alert, Modal } from '../components/Common'
 
 /**
- * GetStarted Page - Landing page with Login/Register
+ * GetStarted Page - Landing page with Login/Register Modal
  */
 function GetStarted() {
   const navigate = useNavigate()
   const { login, register } = useAuth()
+  const [showModal, setShowModal] = useState(false)
   const [activeTab, setActiveTab] = useState('login')
   const [isLoading, setIsLoading] = useState(false)
   const [alert, setAlert] = useState(null)
@@ -107,9 +108,17 @@ function GetStarted() {
     }
   }
 
+  const handleCloseModal = () => {
+    setShowModal(false)
+    setLoginForm({ email: '', password: '' })
+    setRegisterForm({ username: '', email: '', password: '', confirmPassword: '' })
+    setLoginErrors({})
+    setRegisterErrors({})
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-2xl">
         {/* Alert */}
         {alert && (
           <Alert
@@ -120,31 +129,80 @@ function GetStarted() {
           />
         )}
 
-        {/* Card */}
-        <div className="bg-white rounded-xl shadow-lg p-8 space-y-6">
-          {/* Header */}
-          <div className="text-center space-y-2">
+        {/* Main Content Card */}
+        <div className="bg-dark-800 rounded-xl shadow-lg shadow-black/50 p-12 space-y-8 border border-dark-700 text-center">
+          {/* Logo & Title */}
+          <div className="space-y-4">
             <div className="flex justify-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">EMI</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-2xl">EMI</span>
               </div>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900">EMI Insight</h1>
-            <p className="text-gray-500">Manage your loans efficiently</p>
+            <div>
+              <h1 className="text-4xl font-bold text-dark-text mb-2">EMI Insight</h1>
+              <p className="text-lg text-dark-text-secondary">Smart Loan Management Made Simple</p>
+            </div>
           </div>
 
+          {/* Description */}
+          <div className="space-y-4 max-w-xl mx-auto">
+            <p className="text-dark-text leading-relaxed text-base">
+              EMI Insight helps you manage your loans efficiently with real-time tracking, amortization schedules, and prepayment simulations. Stay in control of your finances and make informed decisions about your debts.
+            </p>
+            <p className="text-dark-text leading-relaxed text-base">
+              Track multiple loans, visualize your progress, and achieve your financial goals with our comprehensive loan management platform. Experience the peace of mind that comes with complete visibility over your loan portfolio.
+            </p>
+          </div>
+
+          {/* Features Grid (Optional) */}
+          <div className="grid grid-cols-3 gap-4 py-4">
+            <div className="space-y-2">
+              <div className="text-2xl">📊</div>
+              <p className="text-sm text-dark-text-secondary">Track Progress</p>
+            </div>
+            <div className="space-y-2">
+              <div className="text-2xl">📈</div>
+              <p className="text-sm text-dark-text-secondary">Smart Analytics</p>
+            </div>
+            <div className="space-y-2">
+              <div className="text-2xl">⚡</div>
+              <p className="text-sm text-dark-text-secondary">Fast Payments</p>
+            </div>
+          </div>
+
+          {/* Sign In Button */}
+          <div className="pt-6">
+            <Button
+              onClick={() => setShowModal(true)}
+              fullWidth
+              size="md"
+              className="text-lg py-3"
+            >
+              Get Started
+            </Button>
+          </div>
+
+          {/* Footer */}
+          <div className="text-center text-sm text-dark-text-secondary pt-4 border-t border-dark-700">
+            <p>© 2026 EMI Insight. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Login/Register Modal */}
+      <Modal isOpen={showModal} onClose={handleCloseModal} size="md">
+        <div className="space-y-6">
           {/* Tabs */}
-          <div className="flex gap-2 border-b border-gray-200">
+          <div className="flex gap-2 border-b border-dark-700">
             <button
               onClick={() => {
                 setActiveTab('login')
                 setLoginErrors({})
-                setAlert(null)
               }}
               className={`flex-1 py-3 text-sm font-semibold transition border-b-2 ${
                 activeTab === 'login'
-                  ? 'text-blue-600 border-blue-600'
-                  : 'text-gray-500 border-transparent hover:text-gray-700'
+                  ? 'text-primary-500 border-primary-500'
+                  : 'text-dark-text-secondary border-transparent hover:text-dark-text'
               }`}
             >
               Login
@@ -153,12 +211,11 @@ function GetStarted() {
               onClick={() => {
                 setActiveTab('register')
                 setRegisterErrors({})
-                setAlert(null)
               }}
               className={`flex-1 py-3 text-sm font-semibold transition border-b-2 ${
                 activeTab === 'register'
-                  ? 'text-blue-600 border-blue-600'
-                  : 'text-gray-500 border-transparent hover:text-gray-700'
+                  ? 'text-primary-500 border-primary-500'
+                  : 'text-dark-text-secondary border-transparent hover:text-dark-text'
               }`}
             >
               Register
@@ -246,14 +303,14 @@ function GetStarted() {
             </form>
           )}
 
-          {/* Footer */}
-          <div className="text-center text-sm text-gray-600">
+          {/* Tab Footer */}
+          <div className="text-center text-sm text-dark-text-secondary">
             {activeTab === 'login' ? (
               <>
                 Don't have an account?{' '}
                 <button
                   onClick={() => setActiveTab('register')}
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-primary-500 font-semibold hover:underline"
                 >
                   Register
                 </button>
@@ -263,7 +320,7 @@ function GetStarted() {
                 Already have an account?{' '}
                 <button
                   onClick={() => setActiveTab('login')}
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-primary-500 font-semibold hover:underline"
                 >
                   Login
                 </button>
@@ -271,12 +328,7 @@ function GetStarted() {
             )}
           </div>
         </div>
-
-        {/* Footer */}
-        <div className="text-center mt-8 text-sm text-gray-600">
-          <p>© 2026 EMI Insight. All rights reserved.</p>
-        </div>
-      </div>
+      </Modal>
     </div>
   )
 }

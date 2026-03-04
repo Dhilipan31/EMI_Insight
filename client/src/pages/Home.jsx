@@ -25,7 +25,7 @@ function Home() {
   }, [])
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-dark-900">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -39,10 +39,10 @@ function Home() {
           <div className="p-4 sm:p-6 space-y-6">
             {/* Welcome Message */}
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-dark-text">
                 Welcome back, {user?.username}!
               </h1>
-              <p className="text-gray-600">Here's your loan overview at a glance</p>
+              <p className="text-dark-text-secondary">Here's your loan overview at a glance</p>
             </div>
 
             {/* Dashboard Overview */}
@@ -54,7 +54,7 @@ function Home() {
             ) : (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">Your Loans</h2>
+                  <h2 className="text-2xl font-bold text-dark-text">Your Loans</h2>
                   <Button
                     onClick={() => setShowCreateLoan(true)}
                     size="md"
@@ -71,7 +71,7 @@ function Home() {
                 ) : (
                   <Card className="text-center py-12">
                     <div className="space-y-4">
-                      <p className="text-gray-500">No loans yet</p>
+                      <p className="text-dark-text-secondary">No loans yet</p>
                       <Button
                         onClick={() => setShowCreateLoan(true)}
                         size="md"

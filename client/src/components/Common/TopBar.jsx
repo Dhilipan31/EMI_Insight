@@ -28,13 +28,13 @@ export const TopBar = ({ onMenuClick }) => {
     .toUpperCase() || 'U'
 
   return (
-    <div className="bg-white shadow-md sticky top-0 z-40">
+    <div className="bg-dark-800 shadow-md shadow-black/30 sticky top-0 z-40 border-b border-dark-700">
       <div className="flex items-center justify-between px-4 sm:px-6 py-4">
         {/* Left: Menu button + Logo */}
         <div className="flex items-center gap-4">
           <button
             onClick={onMenuClick}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition"
+            className="lg:hidden p-2 rounded-lg hover:bg-dark-700 transition text-dark-text"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,10 +47,10 @@ export const TopBar = ({ onMenuClick }) => {
             </svg>
           </button>
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/home')}>
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">EMI</span>
             </div>
-            <h1 className="text-xl font-bold text-gray-900 hidden sm:block">EMI Insight</h1>
+            <h1 className="text-xl font-bold text-dark-text hidden sm:block">EMI Insight</h1>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ export const TopBar = ({ onMenuClick }) => {
             <input
               type="text"
               placeholder="Search loans..."
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 transition"
+              className="w-full px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 text-dark-text placeholder-dark-text-secondary focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 transition"
             />
           </div>
         </div>
@@ -68,7 +68,7 @@ export const TopBar = ({ onMenuClick }) => {
         {/* Right: User Menu */}
         <div className="flex items-center gap-4">
           {/* Notifications (Future) */}
-          <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition">
+          <button className="relative p-2 text-dark-text-secondary hover:text-dark-text hover:bg-dark-700 rounded-lg transition">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -83,24 +83,24 @@ export const TopBar = ({ onMenuClick }) => {
           <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-dark-700 transition"
             >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-sm">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-semibold text-sm">
                 {userInitials}
               </div>
-              <span className="text-sm font-medium text-gray-700 hidden sm:block">{user?.username}</span>
+              <span className="text-sm font-medium text-dark-text hidden sm:block">{user?.username}</span>
             </button>
 
             {/* Dropdown Menu */}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10">
-                <div className="px-4 py-2 border-b border-gray-200">
-                  <p className="text-sm font-semibold text-gray-900">{user?.username}</p>
-                  <p className="text-xs text-gray-500">{user?.email}</p>
+              <div className="absolute right-0 mt-2 w-48 bg-dark-800 rounded-lg shadow-lg shadow-black/50 border border-dark-700 py-2 z-10">
+                <div className="px-4 py-2 border-b border-dark-700">
+                  <p className="text-sm font-semibold text-dark-text">{user?.username}</p>
+                  <p className="text-xs text-dark-text-secondary">{user?.email}</p>
                 </div>
                 <button
                   onClick={handleProfileClick}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-sm text-dark-text hover:bg-dark-700 transition flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -114,7 +114,7 @@ export const TopBar = ({ onMenuClick }) => {
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition flex items-center gap-2"
+                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-dark-700 transition flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path

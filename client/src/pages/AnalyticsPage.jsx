@@ -17,7 +17,7 @@ function AnalyticsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex h-screen bg-dark-900">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="flex-1 flex flex-col">
           <TopBar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
@@ -53,7 +53,7 @@ function AnalyticsPage() {
   const Colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899']
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-dark-900">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -63,34 +63,34 @@ function AnalyticsPage() {
           <div className="p-4 sm:p-6 space-y-6">
             {/* Header */}
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Financial Analytics</h1>
-              <p className="text-gray-600">Comprehensive overview of your loans and payments</p>
+              <h1 className="text-3xl font-bold text-dark-text">Financial Analytics</h1>
+              <p className="text-dark-text-secondary">Comprehensive overview of your loans and payments</p>
             </div>
 
             {/* Key Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Total Borrowed</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalBorrowed)}</p>
+                  <p className="text-sm text-dark-text-secondary">Total Borrowed</p>
+                  <p className="text-2xl font-bold text-dark-text">{formatCurrency(totalBorrowed)}</p>
                 </div>
               </Card>
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Total Repaid</p>
-                  <p className="text-2xl font-bold text-green-600">{formatCurrency(totalRepaid)}</p>
+                  <p className="text-sm text-dark-text-secondary">Total Repaid</p>
+                  <p className="text-2xl font-bold text-green-400">{formatCurrency(totalRepaid)}</p>
                 </div>
               </Card>
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Outstanding Balance</p>
-                  <p className="text-2xl font-bold text-red-600">{formatCurrency(totalOutstanding)}</p>
+                  <p className="text-sm text-dark-text-secondary">Outstanding Balance</p>
+                  <p className="text-2xl font-bold text-red-400">{formatCurrency(totalOutstanding)}</p>
                 </div>
               </Card>
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Total Monthly EMI</p>
-                  <p className="text-2xl font-bold text-blue-600">{formatCurrency(totalMonthlyEmi)}</p>
+                  <p className="text-sm text-dark-text-secondary">Total Monthly EMI</p>
+                  <p className="text-2xl font-bold text-primary-500">{formatCurrency(totalMonthlyEmi)}</p>
                 </div>
               </Card>
             </div>
@@ -130,10 +130,10 @@ function AnalyticsPage() {
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={loanComparisonData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} />
-                        <YAxis />
-                        <Tooltip formatter={(value) => formatCurrency(value)} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(100,100,100,0.2)" />
+                        <XAxis dataKey="name" angle={-45} textAnchor="end" height={80} stroke="rgba(165,165,165,0.6)" />
+                        <YAxis stroke="rgba(165,165,165,0.6)" />
+                        <Tooltip formatter={(value) => formatCurrency(value)} contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #2d2d2d' }} />
                         <Legend />
                         <Bar dataKey="outstanding" fill="#ef4444" name="Outstanding Balance" />
                         <Bar dataKey="emi" fill="#3b82f6" name="Monthly EMI" />
@@ -148,37 +148,37 @@ function AnalyticsPage() {
             <Card title="Detailed Loan Summary">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead className="bg-gray-50 border-b border-gray-200">
+                  <thead className="bg-dark-800 border-b border-dark-700">
                     <tr>
-                      <th className="text-left px-4 py-3 font-semibold text-gray-900">Loan Name</th>
-                      <th className="text-left px-4 py-3 font-semibold text-gray-900">Principal</th>
-                      <th className="text-left px-4 py-3 font-semibold text-gray-900">Outstanding</th>
-                      <th className="text-left px-4 py-3 font-semibold text-gray-900">Monthly EMI</th>
-                      <th className="text-left px-4 py-3 font-semibold text-gray-900">Interest Rate</th>
-                      <th className="text-left px-4 py-3 font-semibold text-gray-900">Progress</th>
+                      <th className="text-left px-4 py-3 font-semibold text-dark-text">Loan Name</th>
+                      <th className="text-left px-4 py-3 font-semibold text-dark-text">Principal</th>
+                      <th className="text-left px-4 py-3 font-semibold text-dark-text">Outstanding</th>
+                      <th className="text-left px-4 py-3 font-semibold text-dark-text">Monthly EMI</th>
+                      <th className="text-left px-4 py-3 font-semibold text-dark-text">Interest Rate</th>
+                      <th className="text-left px-4 py-3 font-semibold text-dark-text">Progress</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200">
+                  <tbody className="divide-y divide-dark-700">
                     {loans.map((loan) => {
                       const progress = loan.principal
                         ? ((loan.principal - loan.remainingPrincipal) / loan.principal) * 100
                         : 0
                       return (
-                        <tr key={loan.loanId} className="hover:bg-gray-50">
-                          <td className="px-4 py-3 font-medium text-gray-900">{loan.name}</td>
-                          <td className="px-4 py-3 text-gray-700">{formatCurrency(loan.principal)}</td>
-                          <td className="px-4 py-3 text-red-600 font-semibold">{formatCurrency(loan.remainingPrincipal)}</td>
-                          <td className="px-4 py-3 text-blue-600 font-semibold">{formatCurrency(loan.emi)}</td>
-                          <td className="px-4 py-3 text-gray-700">{loan.interestRate}%</td>
+                        <tr key={loan.loanId} className="hover:bg-dark-800/50 transition">
+                          <td className="px-4 py-3 font-medium text-dark-text">{loan.name}</td>
+                          <td className="px-4 py-3 text-dark-text-secondary">{formatCurrency(loan.principal)}</td>
+                          <td className="px-4 py-3 text-red-400 font-semibold">{formatCurrency(loan.remainingPrincipal)}</td>
+                          <td className="px-4 py-3 text-primary-500 font-semibold">{formatCurrency(loan.emi)}</td>
+                          <td className="px-4 py-3 text-dark-text-secondary">{loan.interestRate}%</td>
                           <td className="px-4 py-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                              <div className="w-20 h-2 bg-dark-700 rounded-full overflow-hidden">
                                 <div
-                                  className="h-full bg-blue-600"
+                                  className="h-full bg-primary-500"
                                   style={{ width: `${progress}%` }}
                                 />
                               </div>
-                              <span className="text-xs font-semibold text-gray-700">{Math.round(progress)}%</span>
+                              <span className="text-xs font-semibold text-dark-text-secondary">{Math.round(progress)}%</span>
                             </div>
                           </td>
                         </tr>
@@ -189,22 +189,22 @@ function AnalyticsPage() {
               </div>
 
               {/* Footer Summary */}
-              <div className="border-t border-gray-200 pt-4 mt-4 grid grid-cols-4 gap-4">
+              <div className="border-t border-dark-700 pt-4 mt-4 grid grid-cols-4 gap-4">
                 <div className="text-center">
-                  <p className="text-xs text-gray-600">Total Borrowed</p>
-                  <p className="text-lg font-bold text-gray-900">{formatCurrency(totalBorrowed)}</p>
+                  <p className="text-xs text-dark-text-secondary">Total Borrowed</p>
+                  <p className="text-lg font-bold text-dark-text">{formatCurrency(totalBorrowed)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-gray-600">Total Repaid</p>
-                  <p className="text-lg font-bold text-green-600">{formatCurrency(totalRepaid)}</p>
+                  <p className="text-xs text-dark-text-secondary">Total Repaid</p>
+                  <p className="text-lg font-bold text-green-400">{formatCurrency(totalRepaid)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-gray-600">Total Outstanding</p>
-                  <p className="text-lg font-bold text-red-600">{formatCurrency(totalOutstanding)}</p>
+                  <p className="text-xs text-dark-text-secondary">Total Outstanding</p>
+                  <p className="text-lg font-bold text-red-400">{formatCurrency(totalOutstanding)}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xs text-gray-600">Total Interest Paid</p>
-                  <p className="text-lg font-bold text-orange-600">{formatCurrency(totalInterest)}</p>
+                  <p className="text-xs text-dark-text-secondary">Total Interest Paid</p>
+                  <p className="text-lg font-bold text-amber-400">{formatCurrency(totalInterest)}</p>
                 </div>
               </div>
             </Card>

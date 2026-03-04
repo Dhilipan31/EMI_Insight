@@ -25,7 +25,7 @@ function LoanDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex h-screen bg-dark-900">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="flex-1 flex flex-col">
           <TopBar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
@@ -39,14 +39,14 @@ function LoanDetailPage() {
 
   if (!loanDetail) {
     return (
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex h-screen bg-dark-900">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="flex-1 flex flex-col">
           <TopBar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
           <div className="flex-1 flex items-center justify-center p-4">
             <Card>
               <div className="text-center space-y-4">
-                <p className="text-gray-600">Loan not found</p>
+                <p className="text-dark-text-secondary">Loan not found</p>
                 <Button onClick={() => navigate('/home')}>Go Back</Button>
               </div>
             </Card>
@@ -70,11 +70,11 @@ function LoanDetailPage() {
   const getStatusColor = () => {
     switch (loan.loanStatus) {
       case 'ACTIVE':
-        return 'bg-blue-100 text-blue-800'
+        return 'badge-active'
       case 'CLOSED':
-        return 'bg-green-100 text-green-800'
+        return 'badge-closed'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'badge-info'
     }
   }
 
@@ -86,7 +86,7 @@ function LoanDetailPage() {
   ]
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-dark-900">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -109,8 +109,8 @@ function LoanDetailPage() {
                 ← Back
               </Button>
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-gray-900">{loan.name}</h1>
-                <p className="text-gray-600">Loan ID: {loan.loanId}</p>
+                <h1 className="text-3xl font-bold text-dark-text">{loan.name}</h1>
+                <p className="text-dark-text-secondary">Loan ID: {loan.loanId}</p>
               </div>
               <span className={`px-4 py-2 rounded-lg font-semibold ${getStatusColor()}`}>
                 {loan.loanStatus}
@@ -121,21 +121,21 @@ function LoanDetailPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Principal Amount</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(loan.principal)}</p>
+                  <p className="text-sm text-dark-text-secondary">Principal Amount</p>
+                  <p className="text-2xl font-bold text-dark-text">{formatCurrency(loan.principal)}</p>
                 </div>
               </Card>
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Outstanding Balance</p>
-                  <p className="text-2xl font-bold text-red-600">{formatCurrency(loan.outstandingBalance)}</p>
+                  <p className="text-sm text-dark-text-secondary">Outstanding Balance</p>
+                  <p className="text-2xl font-bold text-red-400">{formatCurrency(loan.outstandingBalance)}</p>
                 </div>
               </Card>
               <Card>
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600">Monthly EMI</p>
-                  <p className="text-2xl font-bold text-blue-600">{formatCurrency(loan.amortizationSummary.emi)}</p>
-                  <p className="text-xs text-gray-500">{loan.interestRate}% p.a.</p>
+                  <p className="text-sm text-dark-text-secondary">Monthly EMI</p>
+                  <p className="text-2xl font-bold text-primary-500">{formatCurrency(loan.amortizationSummary.emi)}</p>
+                  <p className="text-xs text-dark-text-secondary">{loan.interestRate}% p.a.</p>
                 </div>
               </Card>
             </div>
@@ -145,32 +145,32 @@ function LoanDetailPage() {
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-gray-700">Repayment Progress</p>
-                    <p className="text-sm font-bold text-gray-900">{Math.round(progressPercent)}%</p>
+                    <p className="text-sm font-medium text-dark-text-secondary">Repayment Progress</p>
+                    <p className="text-sm font-bold text-dark-text">{Math.round(progressPercent)}%</p>
                   </div>
-                  <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="w-full h-3 bg-dark-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all"
+                      className="h-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-dark-700">
                   <div>
-                    <p className="text-xs text-gray-600">EMI Paid</p>
+                    <p className="text-xs text-dark-text-secondary">EMI Paid</p>
                     <p className="text-lg font-bold">{loan.emiPaidCount || 0}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Total EMI</p>
+                    <p className="text-xs text-dark-text-secondary">Total EMI</p>
                     <p className="text-lg font-bold">{loan.tenureMonths}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Remaining</p>
+                    <p className="text-xs text-dark-text-secondary">Remaining</p>
                     <p className="text-lg font-bold">{loan.amortizationSummary.remainingInstallments || 0}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-gray-600">Total Interest</p>
+                    <p className="text-xs text-dark-text-secondary">Total Interest</p>
                     <p className="text-lg font-bold">{formatCurrency(loan.interestPaid || 0)}</p>
                   </div>
                 </div>
@@ -183,29 +183,29 @@ function LoanDetailPage() {
                 title="Payment Schedule"
                 className={`border-l-4 ${
                   daysUntilPayment && daysUntilPayment <= 5
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-blue-500'
+                    ? 'border-red-500 bg-red-500/10'
+                    : 'border-primary-500'
                 }`}
               >
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div>
-                    <p className="text-sm text-gray-600">Next Payment Date</p>
-                    <p className="text-lg font-bold text-gray-900">{formatDate(loan.nextPaymentDate)}</p>
+                    <p className="text-sm text-dark-text-secondary">Next Payment Date</p>
+                    <p className="text-lg font-bold text-dark-text">{formatDate(loan.nextPaymentDate)}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Days Until Payment</p>
-                    <p className={`text-lg font-bold ${daysUntilPayment && daysUntilPayment <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
+                    <p className="text-sm text-dark-text-secondary">Days Until Payment</p>
+                    <p className={`text-lg font-bold ${daysUntilPayment && daysUntilPayment <= 5 ? 'text-red-400' : 'text-dark-text'}`}>
                       {daysUntilPayment !== null ? `${daysUntilPayment} days` : 'N/A'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">EMI Pay Day</p>
-                    <p className="text-lg font-bold text-gray-900">{loan.emiPayDay}</p>
+                    <p className="text-sm text-dark-text-secondary">EMI Pay Day</p>
+                    <p className="text-lg font-bold text-dark-text">{loan.emiPayDay}</p>
                   </div>
                   {loan.lastPaymentDate && (
                     <div>
-                      <p className="text-sm text-gray-600">Last Payment</p>
-                      <p className="text-lg font-bold text-gray-900">{formatDate(loan.lastPaymentDate)}</p>
+                      <p className="text-sm text-dark-text-secondary">Last Payment</p>
+                      <p className="text-lg font-bold text-dark-text">{formatDate(loan.lastPaymentDate)}</p>
                     </div>
                   )}
                 </div>
@@ -214,15 +214,15 @@ function LoanDetailPage() {
 
             {/* Tabs */}
             <div className="space-y-4">
-              <div className="flex gap-2 border-b border-gray-200 overflow-x-auto">
+              <div className="flex gap-2 border-b border-dark-700 overflow-x-auto">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap ${
                       activeTab === tab.id
-                        ? 'text-blue-600 border-blue-600'
-                        : 'text-gray-600 border-transparent hover:text-gray-900'
+                        ? 'text-primary-500 border-primary-500'
+                        : 'text-dark-text-secondary border-transparent hover:text-dark-text'
                     }`}
                   >
                     <span className="mr-2">{tab.icon}</span>

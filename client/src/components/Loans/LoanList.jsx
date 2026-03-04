@@ -23,8 +23,8 @@ export const LoanList = ({ loans = [] }) => {
             onClick={() => setFilterStatus(status)}
             className={`px-4 py-2 rounded-lg font-medium transition ${
               filterStatus === status
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                ? 'bg-primary-600 text-white'
+                : 'bg-dark-700 text-dark-text-secondary hover:bg-dark-600'
             }`}
           >
             {status === 'ALL' ? 'All Loans' : `${status} Loans`}
@@ -45,8 +45,8 @@ export const LoanList = ({ loans = [] }) => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-600">No {filterStatus !== 'ALL' && filterStatus.toLowerCase()} loans found</p>
+        <div className="text-center py-12 bg-dark-800 rounded-lg">
+          <p className="text-dark-text-secondary">No {filterStatus !== 'ALL' && filterStatus.toLowerCase()} loans found</p>
         </div>
       )}
     </div>

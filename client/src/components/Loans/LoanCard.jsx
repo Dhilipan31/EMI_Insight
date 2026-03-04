@@ -17,11 +17,11 @@ export const LoanCard = ({ loan }) => {
   const getStatusColor = () => {
     switch (loan.loanStatus) {
       case 'ACTIVE':
-        return 'bg-blue-100 text-blue-800'
+        return 'badge-active'
       case 'CLOSED':
-        return 'bg-green-100 text-green-800'
+        return 'badge-closed'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'badge-info'
     }
   }
 
@@ -39,8 +39,8 @@ export const LoanCard = ({ loan }) => {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900">{loan.name}</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="text-lg font-semibold text-dark-text">{loan.name}</h3>
+            <p className="text-sm text-dark-text-secondary">
               {loan.principal ? formatCurrency(loan.principal) : 'N/A'} • {loan.interestRate}% p.a.
             </p>
           </div>
@@ -52,26 +52,26 @@ export const LoanCard = ({ loan }) => {
         {/* Key Metrics */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-xs text-gray-600">Outstanding Balance</p>
-            <p className="text-lg font-bold text-gray-900">
+            <p className="text-xs text-dark-text-secondary">Outstanding Balance</p>
+            <p className="text-lg font-bold text-dark-text">
               {formatCurrency(loan.remainingPrincipal)}
             </p>
           </div>
           <div>
-            <p className="text-xs text-gray-600">Monthly EMI</p>
-            <p className="text-lg font-bold text-gray-900">{formatCurrency(loan.emi)}</p>
+            <p className="text-xs text-dark-text-secondary">Monthly EMI</p>
+            <p className="text-lg font-bold text-dark-text">{formatCurrency(loan.emi)}</p>
           </div>
         </div>
 
         {/* Progress Bar */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-xs text-gray-600">Progress</p>
-            <p className="text-xs font-semibold text-gray-700">{Math.round(progressPercent)}%</p>
+            <p className="text-xs text-dark-text-secondary">Progress</p>
+            <p className="text-xs font-semibold text-dark-text-secondary">{Math.round(progressPercent)}%</p>
           </div>
-          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-dark-700 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all"
+              className="h-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -79,19 +79,19 @@ export const LoanCard = ({ loan }) => {
 
         {/* Payment Info */}
         {loan.loanStatus === 'ACTIVE' && loan.nextPaymentDate && (
-          <div className="bg-blue-50 rounded-lg p-3">
-            <p className="text-xs text-blue-900">Next Payment</p>
-            <p className="text-sm font-semibold text-blue-900">{formatDate(loan.nextPaymentDate)}</p>
-            <p className="text-xs text-blue-700">{getDaysUntilPayment()} days remaining</p>
+          <div className="bg-primary-500/10 rounded-lg p-3 border border-primary-500/20">
+            <p className="text-xs text-dark-text-secondary">Next Payment</p>
+            <p className="text-sm font-semibold text-dark-text">{formatDate(loan.nextPaymentDate)}</p>
+            <p className="text-xs text-primary-400">{getDaysUntilPayment()} days remaining</p>
           </div>
         )}
 
         {/* EMI Paid Count */}
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">
+          <span className="text-dark-text-secondary">
             {loan.emiPaidCount || 0} / {loan.tenureMonths || '?'} EMI paid
           </span>
-          <span className="text-gray-700 font-semibold">
+          <span className="text-dark-text font-semibold">
             {loan.remainingEmiMonth ? `${loan.remainingEmiMonth} months left` : 'Completed'}
           </span>
         </div>

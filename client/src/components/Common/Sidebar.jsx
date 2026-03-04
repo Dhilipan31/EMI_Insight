@@ -85,7 +85,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Sidebar */}
       <nav
-        className={`fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 z-40 lg:translate-x-0 lg:static lg:h-auto lg:top-0 ${
+        className={`fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-dark-800 border-r border-dark-700 transform transition-transform duration-300 z-40 lg:translate-x-0 lg:static lg:h-auto lg:top-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -96,8 +96,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
               onClick={() => handleNavigation(item.path)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
                 isActive(item.path)
-                  ? 'bg-blue-50 text-blue-600 font-semibold'
-                  : 'text-gray-700 hover:bg-gray-50'
+                  ? 'bg-dark-700 text-primary-400 font-semibold'
+                  : 'text-dark-text hover:bg-dark-700'
               }`}
             >
               {item.icon}
@@ -107,8 +107,8 @@ export const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer Section (Settings, etc.) */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 p-4">
-          <button className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+        <div className="absolute bottom-0 left-0 right-0 border-t border-dark-700 p-4">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-dark-text rounded-lg hover:bg-dark-700 transition">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"

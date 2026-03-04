@@ -6,17 +6,17 @@ import { useEffect } from 'react'
  */
 export const Alert = ({ type = 'info', message, onClose, autoDismiss = true, timeout = 5000 }) => {
   const typeClasses = {
-    success: 'bg-green-50 border border-green-200 text-green-800',
-    error: 'bg-red-50 border border-red-200 text-red-800',
-    warning: 'bg-yellow-50 border border-yellow-200 text-yellow-800',
-    info: 'bg-blue-50 border border-blue-200 text-blue-800',
+    success: 'bg-green-900/30 border border-green-700 text-green-300',
+    error: 'bg-red-900/30 border border-red-700 text-red-300',
+    warning: 'bg-yellow-900/30 border border-yellow-700 text-yellow-300',
+    info: 'bg-blue-900/30 border border-blue-700 text-blue-300',
   }
 
   const iconClasses = {
-    success: 'text-green-600',
-    error: 'text-red-600',
-    warning: 'text-yellow-600',
-    info: 'text-blue-600',
+    success: 'text-green-400',
+    error: 'text-red-400',
+    warning: 'text-yellow-400',
+    info: 'text-blue-400',
   }
 
   const getIcon = () => {
@@ -61,7 +61,7 @@ export const Alert = ({ type = 'info', message, onClose, autoDismiss = true, tim
       <div className="flex-1">{message}</div>
       <button
         onClick={onClose}
-        className="text-gray-500 hover:text-gray-700 transition"
+        className="text-dark-text-secondary hover:text-dark-text transition"
         aria-label="Close alert"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -31,6 +31,16 @@ export default {
           800: '#166534',
           900: '#145231',
         },
+        dark: {
+          400: '#5a5a5a',
+          500: '#4a4a4a',
+          600: '#3d3d3d',
+          700: '#2d2d2d',
+          800: '#1a1a1a',
+          900: '#0f0f0f',
+        },
+        'dark-text': '#e5e5e5',
+        'dark-text-secondary': '#a0a0a0',
       },
       fontFamily: {
         sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif'],

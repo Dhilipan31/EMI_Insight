@@ -17,11 +17,11 @@ export const Button = ({
     'font-semibold rounded-lg transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed'
 
   const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
+    primary: 'bg-primary-500 text-white hover:bg-primary-600',
+    secondary: 'bg-dark-600 text-dark-text hover:bg-dark-500',
     danger: 'bg-red-600 text-white hover:bg-red-700',
-    outline: 'border border-blue-600 text-blue-600 hover:bg-blue-50',
-    ghost: 'text-gray-700 hover:bg-gray-100',
+    outline: 'border border-primary-500 text-primary-400 hover:bg-dark-800',
+    ghost: 'text-dark-text hover:bg-dark-700',
   }
 
   const sizeClasses = {

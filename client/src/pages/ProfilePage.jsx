@@ -78,7 +78,7 @@ function ProfilePage() {
     : null
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-dark-900">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -88,8 +88,8 @@ function ProfilePage() {
           <div className="p-4 sm:p-6 max-w-2xl space-y-6">
             {/* Header */}
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
-              <p className="text-gray-600">Manage your account information and preferences</p>
+              <h1 className="text-3xl font-bold text-dark-text">My Profile</h1>
+              <p className="text-dark-text-secondary">Manage your account information and preferences</p>
             </div>
 
             {alert && (
@@ -105,7 +105,7 @@ function ProfilePage() {
             <Card>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-2xl">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-2xl">
                     {user?.username
                       ?.split(' ')
                       .map((n) => n[0])
@@ -113,9 +113,9 @@ function ProfilePage() {
                       .toUpperCase() || 'U'}
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">{user?.username}</h2>
-                    <p className="text-gray-600">{user?.email}</p>
-                    <p className="text-sm text-gray-500">User ID: {user?.userId}</p>
+                    <h2 className="text-2xl font-bold text-dark-text">{user?.username}</h2>
+                    <p className="text-dark-text-secondary">{user?.email}</p>
+                    <p className="text-sm text-dark-text-secondary">User ID: {user?.userId}</p>
                   </div>
                 </div>
                 <Button
@@ -148,8 +148,8 @@ function ProfilePage() {
                   required
                 />
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                  <div className="px-4 py-2.5 border border-gray-300 rounded-lg bg-gray-50 text-gray-600">
+                  <label className="block text-sm font-medium text-dark-text-secondary mb-2">Email</label>
+                  <div className="px-4 py-2.5 border border-dark-700 rounded-lg bg-dark-800 text-dark-text">
                     {user?.email}
                   </div>
                 </div>
@@ -181,25 +181,25 @@ function ProfilePage() {
 
                 {/* Calculated Values */}
                 {formData.salary && (
-                  <div className="bg-blue-50 rounded-lg p-4 space-y-3 border border-blue-200">
-                    <h4 className="font-semibold text-gray-900">Financial Summary</h4>
+                  <div className="bg-dark-700/50 rounded-lg p-4 space-y-3 border border-primary-500/30">
+                    <h4 className="font-semibold text-dark-text">Financial Summary</h4>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-xs text-gray-600">Monthly Salary</p>
-                        <p className="text-lg font-bold text-gray-900">
+                        <p className="text-xs text-dark-text-secondary">Monthly Salary</p>
+                        <p className="text-lg font-bold text-dark-text">
                           {formatCurrency(Number(formData.salary) / 12)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-600">Monthly Expenses</p>
-                        <p className="text-lg font-bold text-gray-900">
+                        <p className="text-xs text-dark-text-secondary">Monthly Expenses</p>
+                        <p className="text-lg font-bold text-dark-text">
                           {formData.monthlyExpense ? formatCurrency(formData.monthlyExpense) : '₹0.00'}
                         </p>
                       </div>
                       {disposableIncome !== null && (
                         <div className="col-span-2">
-                          <p className="text-xs text-gray-600">Available for EMI & Savings</p>
-                          <p className={`text-lg font-bold ${disposableIncome >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          <p className="text-xs text-dark-text-secondary">Available for EMI & Savings</p>
+                          <p className={`text-lg font-bold ${disposableIncome >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                             {formatCurrency(disposableIncome)}
                           </p>
                         </div>
@@ -211,7 +211,7 @@ function ProfilePage() {
 
               {/* Save Button */}
               {isEditing && (
-                <div className="flex gap-2 pt-4 border-t border-gray-200 mt-4">
+                <div className="flex gap-2 pt-4 border-t border-dark-700 mt-4">
                   <Button
                     onClick={handleSave}
                     isLoading={isLoading}
@@ -226,16 +226,16 @@ function ProfilePage() {
             {/* Security Section */}
             <Card title="Security">
               <div className="space-y-4">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">Password</h4>
-                  <p className="text-sm text-gray-600 mb-3">Last changed: Never</p>
+                <div className="bg-dark-800 rounded-lg p-4">
+                  <h4 className="font-semibold text-dark-text mb-2">Password</h4>
+                  <p className="text-sm text-dark-text-secondary mb-3">Last changed: Never</p>
                   <Button variant="outline" disabled>
                     Change Password (Coming Soon)
                   </Button>
                 </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">Two-Factor Authentication</h4>
-                  <p className="text-sm text-gray-600 mb-3">Status: Not enabled</p>
+                <div className="bg-dark-800 rounded-lg p-4">
+                  <h4 className="font-semibold text-dark-text mb-2">Two-Factor Authentication</h4>
+                  <p className="text-sm text-dark-text-secondary mb-3">Status: Not enabled</p>
                   <Button variant="outline" disabled>
                     Enable 2FA (Coming Soon)
                   </Button>
@@ -244,9 +244,9 @@ function ProfilePage() {
             </Card>
 
             {/* Danger Zone */}
-            <Card title="Danger Zone" className="border-red-200">
+            <Card title="Danger Zone" className="border-red-500/30">
               <div className="space-y-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-dark-text-secondary">
                   Irreversible actions that will permanently affect your account.
                 </p>
                 <div className="flex gap-2">
